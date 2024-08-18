@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import NavBar from "./components/NavBar";
-import ThemeContext from "./context/ThemeContext";
-import Alertx from "./components/Alertx";
+import ThemeContext from "./context/theme/ThemeContext";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -15,15 +14,14 @@ const App = () => {
     const htmlElement = document.querySelector("html");
     htmlElement.setAttribute(
       "data-bs-theme",
-      theme === "light" ? "dark" : "light"
+      theme === "light" ? "light" : "dark"
     );
   }, [theme]);
 
   return (
     <>
       <NavBar />
-      <Alertx />
-      <Container>
+      <Container className="my-4 py-3">
         <Row xs={1} md={2}>
           <Col>
             <Old />

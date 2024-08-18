@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
-import ThemeContext from "../context/ThemeContext";
+import ThemeContext from "../context/theme/ThemeContext";
 
 const NavBar = () => {
   const { theme, settheme } = useContext(ThemeContext);
@@ -15,14 +15,11 @@ const NavBar = () => {
       <Navbar expand="lg" className="bg-body-tertiary">
         <Container>
           <Navbar.Brand href="/">Taxify</Navbar.Brand>
-          <Navbar.Toggle />
-          <Navbar.Collapse className="justify-content-end">
-            {theme === "light" ? (
-              <i className="fa-regular fa-sun" onClick={toggleTheme}></i>
-            ) : (
-              <i className="fa-regular fa-moon" onClick={toggleTheme}></i>
-            )}
-          </Navbar.Collapse>
+          {theme === "light" ? (
+            <i className="fa-regular fa-sun" onClick={toggleTheme}></i>
+          ) : (
+            <i className="fa-regular fa-moon" onClick={toggleTheme}></i>
+          )}
         </Container>
       </Navbar>
     </div>
