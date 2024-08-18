@@ -4,8 +4,8 @@ import ThemeContext from "./context/theme/ThemeContext";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import New from "./components/New";
-import Old from "./components/Old";
+import CalculationCard from "./components/CalculationCard";
+import { calculate_new_regime, calculate_old_regime } from "./utilities/utils";
 
 const App = () => {
   const { theme } = useContext(ThemeContext);
@@ -24,10 +24,16 @@ const App = () => {
       <Container className="my-4 py-4">
         <Row xs={1} md={2} className="g-5">
           <Col>
-            <Old />
+            <CalculationCard
+              heading={"Old Tax Regime"}
+              cal_func={calculate_old_regime}
+            />
           </Col>
           <Col>
-            <New />
+            <CalculationCard
+              heading={"New Tax Regime"}
+              cal_func={calculate_new_regime}
+            />
           </Col>
         </Row>
       </Container>

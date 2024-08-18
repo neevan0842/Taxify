@@ -4,14 +4,14 @@ import Card from "react-bootstrap/Card";
 import {
   allowOnlyNumbers,
   approximate_ctc,
-  calculate_old_regime,
   formatNumberIndian,
   parseIndianNumber,
 } from "../utilities/utils";
 import InputGroup from "react-bootstrap/InputGroup";
 import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 
-const Old = () => {
+const Old = ({ heading, cal_func }) => {
   const [data, setdata] = useState({
     CtcOrTax: "",
     exemptions: "",
@@ -37,18 +37,14 @@ const Old = () => {
   useEffect(() => {
     if (Convertion === "CtcToTax") {
       setAmount(
-        calculate_old_regime(
-          data.CtcOrTax,
-          data.exemptions,
-          data.deductions + 50_000
-        )
+        cal_func(data.CtcOrTax, data.exemptions, data.deductions + 50_000)
       );
     } else {
       const ctc = approximate_ctc(
         data.CtcOrTax,
         data.exemptions,
         data.deductions + 50_000,
-        calculate_old_regime
+        cal_func
       );
       if (ctc === -1) {
         setError("Target tax should be atleast ₹26,000");
@@ -70,7 +66,7 @@ const Old = () => {
     <div>
       <Card>
         <Card.Header className="text-center">
-          <strong>Old Tax Regime</strong>
+          <strong>{heading}</strong>
         </Card.Header>
         <Card.Body>
           <Form>
@@ -144,6 +140,11 @@ const Old = () => {
       </Card>
     </div>
   );
+};
+
+Old.propTypes = {
+  heading: PropTypes.string,
+  cal_func: PropTypes.func,
 };
 
 export default Old;
