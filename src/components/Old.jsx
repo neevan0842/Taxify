@@ -1,8 +1,6 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
-import { useContext, useEffect, useState } from "react";
-import ThemeContext from "../context/ThemeContext";
 import {
   approximate_ctc,
   calculate_old_regime,
@@ -10,6 +8,7 @@ import {
   parseIndianNumber,
 } from "../utilities/utils";
 import InputGroup from "react-bootstrap/InputGroup";
+import { useEffect, useState } from "react";
 
 const Old = () => {
   const [data, setdata] = useState({
@@ -18,7 +17,6 @@ const Old = () => {
     deductions: "",
   });
   const [Convertion, setConvertion] = useState("CtcToTax");
-  const { theme, colors } = useContext(ThemeContext);
   const [Amount, setAmount] = useState(0);
 
   const handleChange = (e) => {

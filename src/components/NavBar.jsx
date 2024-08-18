@@ -1,9 +1,7 @@
 import { useContext } from "react";
 import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import ThemeContext from "../context/ThemeContext";
-import PropTypes from "prop-types";
 
 const NavBar = () => {
   const { theme, settheme } = useContext(ThemeContext);
@@ -14,7 +12,7 @@ const NavBar = () => {
 
   return (
     <div>
-      <Navbar bg={theme} data-bs-theme={theme}>
+      <Navbar expand="lg" className="bg-body-tertiary">
         <Container>
           <Navbar.Brand href="/">Taxify</Navbar.Brand>
           <Navbar.Toggle />
@@ -22,11 +20,7 @@ const NavBar = () => {
             {theme === "light" ? (
               <i className="fa-regular fa-sun" onClick={toggleTheme}></i>
             ) : (
-              <i
-                className="fa-regular fa-moon"
-                style={{ color: "#ffffff" }}
-                onClick={toggleTheme}
-              ></i>
+              <i className="fa-regular fa-moon" onClick={toggleTheme}></i>
             )}
           </Navbar.Collapse>
         </Container>

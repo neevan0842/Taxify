@@ -12,8 +12,11 @@ const App = () => {
   const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
-    document.body.style.backgroundColor =
-      theme === "light" ? "#F8F9FA" : "#121212";
+    const htmlElement = document.querySelector("html");
+    htmlElement.setAttribute(
+      "data-bs-theme",
+      theme === "light" ? "dark" : "light"
+    );
   }, [theme]);
 
   return (
