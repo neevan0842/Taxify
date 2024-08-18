@@ -144,10 +144,17 @@ const parseIndianNumber = (str) => {
   }
 };
 
+const allowOnlyNumbers = (event) => {
+  if (!/[0-9]/.test(event.key)) {
+    event.preventDefault();
+  }
+};
+
 export {
   calculate_new_regime,
   calculate_old_regime,
   approximate_ctc,
   formatNumberIndian,
   parseIndianNumber,
+  allowOnlyNumbers,
 };

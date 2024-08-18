@@ -2,6 +2,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
 import {
+  allowOnlyNumbers,
   approximate_ctc,
   calculate_old_regime,
   formatNumberIndian,
@@ -16,6 +17,7 @@ const Old = () => {
     exemptions: "",
     deductions: "",
   });
+  const [error, setError] = useState("");
   const [Convertion, setConvertion] = useState("CtcToTax");
   const [Amount, setAmount] = useState(0);
 
@@ -24,6 +26,7 @@ const Old = () => {
   };
 
   const toggleConvertion = () => {
+    setdata({ CtcOrTax: "", exemptions: "", deductions: "" });
     if (Convertion === "CtcToTax") {
       setConvertion("TaxToCtc");
     } else {
@@ -41,14 +44,25 @@ const Old = () => {
         )
       );
     } else {
-      setAmount(
-        approximate_ctc(
-          data.CtcOrTax,
-          data.exemptions,
-          data.deductions + 50_000,
-          calculate_old_regime
-        )
+      const ctc = approximate_ctc(
+        data.CtcOrTax,
+        data.exemptions,
+        data.deductions + 50_000,
+        calculate_old_regime
       );
+      if (ctc === -1) {
+        setError("Target tax should be atleast ₹26,000");
+        setAmount(0);
+      } else if (ctc === -2) {
+        setError("Target tax should be atmost ₹10,00,00,000");
+        setAmount(0);
+      } else if (ctc === -3) {
+        setError("Could not find CTC for given target tax");
+        setAmount(0);
+      } else {
+        setAmount(ctc);
+        setError("");
+      }
     }
   }, [data]);
 
@@ -72,10 +86,14 @@ const Old = () => {
                     Convertion === "CtcToTax" ? "Enter CTC" : "Enter Tax"
                   }
                   onChange={handleChange}
+                  onInput={allowOnlyNumbers}
                   name="CtcOrTax"
                   value={formatNumberIndian(data.CtcOrTax)}
                 />
               </InputGroup>
+              <Form.Text className="text-muted">
+                {Convertion === "TaxToCtc" && error}
+              </Form.Text>
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicExemptions">
@@ -86,6 +104,7 @@ const Old = () => {
                   type="text"
                   placeholder="Enter Exemptions"
                   onChange={handleChange}
+                  onInput={allowOnlyNumbers}
                   name="exemptions"
                   value={formatNumberIndian(data.exemptions)}
                 />
@@ -100,6 +119,7 @@ const Old = () => {
                   type="text"
                   placeholder="Enter Deductions"
                   onChange={handleChange}
+                  onInput={allowOnlyNumbers}
                   name="deductions"
                   value={formatNumberIndian(data.deductions)}
                 />
