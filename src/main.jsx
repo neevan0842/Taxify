@@ -1,9 +1,12 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App.jsx";
+import ThemeState from "./context/ThemeState";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <App />
+    <ThemeState>
+      <App />
+    </ThemeState>
   </StrictMode>
 );
